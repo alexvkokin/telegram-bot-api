@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace Alexvkokin\TelegramBotApi;
 
+use Alexvkokin\TelegramBotApi\Client\Client;
 use Alexvkokin\TelegramBotApi\Client\Request;
-use Alexvkokin\TelegramBotApi\Client\Response;
-use Alexvkokin\TelegramBotApi\Client\TelegramClient;
 use Alexvkokin\TelegramBotApi\Method\Method;
 use Alexvkokin\TelegramBotApi\Parser\MethodParser;
+use Alexvkokin\TelegramBotApi\Parser\ResponseParser;
+use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use RuntimeException;
+use Throwable;
 
 final readonly class TelegramBotApi
 {
@@ -16,27 +19,57 @@ final readonly class TelegramBotApi
 
     public function __construct(
         string $token,
-        private TelegramClient $client,
+        private Client $client,
         string $baseUrl = 'https://api.telegram.org',
         private MethodParser $methodParser = new MethodParser(),
-
+        private ResponseParser $responseParser = new ResponseParser(),
     ) {
         $this->baseUrl = $baseUrl . '/bot' . $token . '/';
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws \JsonException
+     * @throws RuntimeException
      */
-    public function send(Method $method): Response
+    public function send(Method $method): object
     {
-        $request = new Request(
-            $this->getUrl($method),
-            $method->method(),
-            $this->methodParser->getParams($method),
-        );
+        try {
+            $request = new Request(
+                $this->getUrl($method),
+                $method->method(),
+                $this->methodParser->getParams($method),
+            );
+            $response = $this->client->send($request);
 
-        return $this->client->send($request);
+        } catch (ClientExceptionInterface $e) {
+            throw new RuntimeException('Error sending request.', previous: $e);
+        }
+
+        try {
+            $body = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new RuntimeException('Error parsing response.', previous: $e);
+        }
+
+        $fieldOk = $body['ok'] ?? null;
+
+        if ($fieldOk === null) {
+            throw new RuntimeException('Incorrect "ok" field in response. Expected boolean, got ' . gettype($fieldOk));
+        }
+
+        if ($fieldOk === true) {
+            try {
+                return $this->responseParser->asObject($method->responseClassName(), $body['result'] ?? []);
+            } catch (Throwable $e) {
+                throw new RuntimeException('Error parsing response.', previous: $e);
+            }
+        }
+
+        return $this->getFailureResult();
+    }
+
+    private function getFailureResult(): object
+    {
+        return new \stdClass();
     }
 
     private function getUrl(Method $method): string

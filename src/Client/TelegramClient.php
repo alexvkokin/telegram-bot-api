@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-final readonly class TelegramClient
+final readonly class TelegramClient implements Client
 {
     public function __construct(
         private ClientInterface $client,
