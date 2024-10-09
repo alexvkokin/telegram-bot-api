@@ -8,6 +8,8 @@ use Alexvkokin\TelegramBotApi\Client\Request;
 use Alexvkokin\TelegramBotApi\Method\Method;
 use Alexvkokin\TelegramBotApi\Parser\MethodParser;
 use Alexvkokin\TelegramBotApi\Parser\ResponseParser;
+use Alexvkokin\TelegramBotApi\Type\FailResponse;
+use Alexvkokin\TelegramBotApi\Type\Type;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use RuntimeException;
@@ -30,7 +32,7 @@ final readonly class TelegramBotApi
     /**
      * @throws RuntimeException
      */
-    public function send(Method $method): object
+    public function send(Method $method): Type
     {
         try {
             $request = new Request(
@@ -67,9 +69,9 @@ final readonly class TelegramBotApi
         return $this->getFailureResult();
     }
 
-    private function getFailureResult(): object
+    private function getFailureResult(): Type
     {
-        return new \stdClass();
+        return new FailResponse();
     }
 
     private function getUrl(Method $method): string

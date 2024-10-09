@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#messageentity
  */
-final readonly class MessageEntity
+final readonly class MessageEntity implements Type
 {
     public function __construct(
         public string $type,

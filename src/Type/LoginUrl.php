@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#loginurl
  */
-final readonly class LoginUrl
+final readonly class LoginUrl implements Type
 {
     public function __construct(
         public string $url,

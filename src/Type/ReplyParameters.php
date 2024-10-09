@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#replyparameters
  */
-final readonly class ReplyParameters
+final readonly class ReplyParameters implements Type
 {
     public function __construct(
         public int $message_id,

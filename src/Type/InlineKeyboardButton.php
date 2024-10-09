@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
  */
-final readonly class InlineKeyboardButton
+final readonly class InlineKeyboardButton implements Type
 {
     public function __construct(
         public string $text,

@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#chat
  */
-final readonly class Chat
+final readonly class Chat implements Type
 {
     public function __construct(
         public int $id,

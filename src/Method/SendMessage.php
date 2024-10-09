@@ -22,8 +22,7 @@ final readonly class SendMessage implements Method
     }
 
     /**
-     * @template TClass of Message
-     * @return class-string<TClass>
+     * @return class-string<Message>
      */
     public function responseClassName(): string
     {

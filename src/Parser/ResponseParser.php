@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 namespace Alexvkokin\TelegramBotApi\Parser;
 
+use Alexvkokin\TelegramBotApi\Type\Type;
 use ReflectionClass;
 use ReflectionNamedType;
 
 final readonly class ResponseParser
 {
     /**
-     * @template TClass
+     * @template TClass of Type
      * @param class-string<TClass> $className
      * @param array $bodyResult
-     * @return TClass
+     * @return Type
      * @throws \ReflectionException
      */
-    public function asObject(string $className, array $bodyResult): object
+    public function asObject(string $className, array $bodyResult): Type
     {
         $reflection = new ReflectionClass($className);
 

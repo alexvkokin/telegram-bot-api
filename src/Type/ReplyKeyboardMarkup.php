@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#replykeyboardmarkup
  */
-final readonly class ReplyKeyboardMarkup
+final readonly class ReplyKeyboardMarkup implements Type
 {
     public function __construct(
         public array $keyboard,

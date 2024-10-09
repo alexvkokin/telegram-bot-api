@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
  */
-final readonly class InlineKeyboardMarkup
+final readonly class InlineKeyboardMarkup implements Type
 {
     public function __construct(
         public array $inline_keyboard,

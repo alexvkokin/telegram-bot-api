@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#linkpreviewoptions
  */
-final readonly class LinkPreviewOptions
+final readonly class LinkPreviewOptions implements Type
 {
     public function __construct(
         public ?bool $is_disabled = null,

@@ -6,7 +6,7 @@ namespace Alexvkokin\TelegramBotApi\Type;
 /**
  * @see https://core.telegram.org/bots/api#switchinlinequerychosenchat
  */
-final readonly class SwitchInlineQueryChosenChat
+final readonly class SwitchInlineQueryChosenChat implements Type
 {
     public function __construct(
         public ?string $query = null,
