@@ -50,6 +50,7 @@ final readonly class TelegramBotApi
                 $this->getUrl($method),
                 $method->method(),
                 $this->methodParser->getParams($method),
+                $this->methodParser->getFiles($method),
             );
 
             return $this->client->send($request);

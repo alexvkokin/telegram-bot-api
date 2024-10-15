@@ -9,5 +9,6 @@ final readonly class Request
         public string $uri,
         public HttpMethod $method,
         public array $params = [],
+        public array $files = [],
     ) {}
 }
