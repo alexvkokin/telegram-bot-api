@@ -18,6 +18,7 @@ composer require alexvkokin/telegram-bot-api
 use Alexvkokin\TelegramBotApi\Client\TelegramClient;
 use Alexvkokin\TelegramBotApi\Method\SendMessage;
 use Alexvkokin\TelegramBotApi\Method\SendPhoto;
+use Alexvkokin\TelegramBotApi\Method\GetMe;
 use Alexvkokin\TelegramBotApi\TelegramBotApi;
 use Alexvkokin\TelegramBotApi\Type\InputFile;
 use GuzzleHttp\Client;
@@ -55,4 +56,5 @@ $method = new SendPhoto(
     chat_id: $chatId,
     photo: InputFile::withLocalFile(__DIR__.'/../imgs/screen.png', 'screenshot 1'),
 );
+$response = $api->send($method);
 ```
