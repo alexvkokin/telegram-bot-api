@@ -11,7 +11,8 @@ final readonly class SimpleClass implements Method
 {
     public function __construct(
         public string|int $chat_id,
-        public string $text
+        public string $text,
+        public ?string $optional = null,
     ) {}
 
     public function method(): HttpMethod

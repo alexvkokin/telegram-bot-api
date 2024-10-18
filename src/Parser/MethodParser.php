@@ -47,13 +47,35 @@ final readonly class MethodParser
 
             $valueProperty = $method->$nameProperty;
 
-            if (!($valueProperty instanceof Type)) {
+            if ($valueProperty === null) {
+                continue;
+            }
+
+            $valueIdScalar = !is_array($valueProperty) && !($valueProperty instanceof Type);
+            $valueIsFile = $valueProperty instanceof InputFile;
+
+            if ($valueIdScalar) {
                 $valueProperty = (string)$valueProperty;
+            } else if (!$valueIsFile) {
+                $valueProperty = $this->recursiveConvertToArray($valueProperty);
             }
 
             $properties[$nameProperty] = $valueProperty;
         }
 
         return $properties;
+    }
+
+    function recursiveConvertToArray(mixed $data): mixed
+    {
+        if (is_object($data)) {
+            $data = array_filter(get_object_vars($data));
+        }
+
+        if (is_array($data)) {
+            return array_map([$this, 'recursiveConvertToArray'], $data);
+        }
+
+        return $data;
     }
 }

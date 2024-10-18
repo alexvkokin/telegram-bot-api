@@ -8,7 +8,11 @@ namespace Alexvkokin\TelegramBotApi\Type;
  */
 final readonly class InlineKeyboardMarkup implements Type
 {
+    /**
+     * @psalm-param array<array-key, array<array-key, InlineKeyboardButton>> $inline_keyboard
+     */
     public function __construct(
         public array $inline_keyboard,
-    ) {}
+    ) {
+    }
 }
