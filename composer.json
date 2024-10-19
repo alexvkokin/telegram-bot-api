@@ -13,15 +13,16 @@
         "php-http/multipart-stream-builder": "^1.4.2",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.1",
-        "psr/http-message": "^1.1|^2.0"
+        "psr/http-message": "^1.1|^2.0",
+        "psr/log": "^3.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "*",
         "httpsoft/http-message": "^1.1",
         "maglnet/composer-require-checker": "^4.11",
         "phpunit/phpunit": "^10.5",
-        "psr/log": "^3.0",
-        "vimeo/psalm": "^5.26"
+        "vimeo/psalm": "^5.26",
+        "monolog/monolog": "^3.7"
     },
     "authors": [
         {

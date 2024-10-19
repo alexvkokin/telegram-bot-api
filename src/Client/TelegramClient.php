@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Alexvkokin\TelegramBotApi\Client;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
+use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -20,7 +21,7 @@ final readonly class TelegramClient implements Client
 
     /**
      * @throws ClientExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function send(Request $request): Response
     {
@@ -43,7 +44,7 @@ final readonly class TelegramClient implements Client
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function post(Request $request): RequestInterface
     {
