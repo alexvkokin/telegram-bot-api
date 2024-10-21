@@ -57,6 +57,8 @@ final readonly class TelegramBotApi
 
         } catch (ClientExceptionInterface $e) {
             throw new RuntimeException('Error sending request.', previous: $e);
+        } catch (JsonException $e) {
+            throw new RuntimeException('Error parsing response.', previous: $e);
         }
     }
 
