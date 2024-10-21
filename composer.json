@@ -43,6 +43,11 @@
     "scripts": {
         "test": "phpunit",
         "check": "composer-require-checker check --config-file=composer-require-checker.json composer.json",
-        "psalm": "psalm --no-cache"
+        "psalm": "psalm --no-cache",
+        "all": [
+            "@check",
+            "@test",
+            "@psalm"
+        ]
     }
 }

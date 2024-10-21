@@ -8,6 +8,7 @@ use Alexvkokin\TelegramBotApi\Client\Response;
 use Alexvkokin\TelegramBotApi\Method\GetMe;
 use Alexvkokin\TelegramBotApi\Method\SendMessage;
 use Alexvkokin\TelegramBotApi\TelegramBotApi;
+use Alexvkokin\TelegramBotApi\Type\BadResponse;
 use Alexvkokin\TelegramBotApi\Type\Chat;
 use Alexvkokin\TelegramBotApi\Type\Message;
 use Alexvkokin\TelegramBotApi\Type\User;
@@ -63,6 +64,22 @@ class TelegramBotApiTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $result = $sut->send($method);
+    }
+
+    public function test_send_message_method_bad_response(): void
+    {
+        $method = new SendMessage(0, 'Hello, World!');
+        $sut = $this->getSut(400, '{"ok":false,"error_code":400,"description":"Bad Request: chat not found"}');
+
+        $result = $sut->send($method);
+
+        $this->assertEquals(
+            $result,
+            new BadResponse(
+                error_code: 400,
+                description: "Bad Request: chat not found",
+            )
+        );
     }
 
 

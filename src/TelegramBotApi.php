@@ -9,7 +9,7 @@ use Alexvkokin\TelegramBotApi\Client\Response;
 use Alexvkokin\TelegramBotApi\Method\Method;
 use Alexvkokin\TelegramBotApi\Parser\MethodParser;
 use Alexvkokin\TelegramBotApi\Parser\ResponseParser;
-use Alexvkokin\TelegramBotApi\Type\FailResponse;
+use Alexvkokin\TelegramBotApi\Type\BadResponse;
 use Alexvkokin\TelegramBotApi\Type\Type;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -39,7 +39,7 @@ final readonly class TelegramBotApi
             return $this->getResult($method, $fieldResult);
         }
 
-        return $this->getFailureResult();
+        return $this->getFailureResult($fieldResult);
     }
 
 
@@ -74,7 +74,7 @@ final readonly class TelegramBotApi
         }
 
         $fieldOk = $decodedBody['ok'] ?? null;
-        $fieldResult = $decodedBody['result'] ?? null;
+        $fieldResult = $decodedBody['result'] ?? $decodedBody;
 
         if ($fieldOk === null) {
             throw new RuntimeException('Incorrect "ok" field in response. Expected boolean, got ' . gettype($fieldOk));
@@ -92,8 +92,11 @@ final readonly class TelegramBotApi
         }
     }
 
-    private function getFailureResult(): Type
+    private function getFailureResult(array $fieldResult): Type
     {
-        return new FailResponse();
+        return new BadResponse(
+            error_code: $fieldResult['error_code'] ?? 0,
+            description: $fieldResult['description'] ?? 'Unknown error',
+        );
     }
 }
